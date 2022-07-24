@@ -1,0 +1,160 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+{% block body %}
+
+<div class="card border-light col col-lg-18 col-md-18 col-sm-12">
+<div class="container">
+    <div class="row">
+
+		        <div class="col-lg-4">
+                <img src="{{listing.imageURL}}"  width="200"  >
+                    <hr>
+                <h5>{% block title %}{{ listing.title }} {% endblock %}
+
+                    {% if listing.listing_seller == user %}
+                    <p><small> * {{ listing.listing_seller }}, you are the listing owner </small></p>
+                    {% endif %}
+
+                </h5>
+                     <hr>
+                    <br>
+
+                    <h4><p><strong> Bid Value: </strong>{{listing.starting_bid}}$</p>
+                        <h6><p><small> (First Bid:{{Bids.first.value}}$) </small></p>
+                                                            {{num_bids}} bid(s) so far.
+                        <hr>
+                    </h4>
+
+        <h5>
+
+                    {% if listing.status == 'Sold' and listing.listing_seller == user%}
+                        <span class="badge badge-light">
+                        <h4 >The auction is over.</h4>
+                        <h4 >The winner is: {{Bids.last.user|default:"N/A"}} </h4>
+                        </span>
+                    {% endif %}
+
+
+                {% if listing.listing_seller == request.user %}
+                    <p></p>
+                    {% elif Bids.last.user == request.user %}
+
+                    {% if listing.status == 'Sold' %}
+                    <span class="badge-light">
+                        <p>Congratulations! You, {{ Bids.last.user}}, the highest bidder and the winner of the auction.</p>
+                        <h4>Auction is closed</h4>
+                    </span>
+                    {% else %}
+                        <p>Your bid is the current bid!</p>
+                    {% endif %}
+
+                    {% elif listing.status == 'Sold' and not Bids.last.user == request.user %}
+                        <p>Sorry, the auction is over.</p>
+
+                    {% endif %}
+
+
+
+
+
+
+
+
+                    {% if listing.status == 'Active' and listing.listing_seller == request.user%}
+
+                    <form action="{% url 'close_listing' listing.id %}" method="POST">
+                        {% csrf_token %}
+                    <input type="submit" class="btn btn-danger btn-sm mt-2" name="close" value="Close Listing">
+                    </form>
+                <br>
+                </h5>
+
+                    {% else %}
+                    {% if listing.status == 'Active' %}
+                <form action="{% url 'place_bid' %}" method="post">
+                    {% csrf_token %}
+                    {{bid_form}}
+                    <br>
+                    <input type = submit value="PLACE YOUR BID NOW">
+                    <input type="hidden" name="item_id" value="{{listing.id}}">
+                </form>
+
+                    {% endif %}
+                    {% endif %}
+
+
+
+
+                    </h5>
+                </div>
+
+        <div class="card border-light col col-lg-8 col-md-8 col-sm-12">
+
+            <p> <h3>PRODUCT DESCRIPTION:</h3>
+            {{ listing.description }}</p>
+                <br>
+
+            <div class="body">
+            {% if watchlist.count == 0 %}
+                <a class="btn btn-success"  href="{% url 'add_watchlist' listing.id %}" role="button">Add to Watchlist</a>
+
+                {% else %}
+                <a class="btn btn-outline-info"  href="{% url 'remove_watchlist' listing.id %}">Remove from Watchlist</a>
+                {% endif %}
+            </div>
+
+            <p></p>
+            <h4>Details: </h4>
+            <ul>
+
+                <li><p class="card-text"><small class="text-muted">CREATED DATE: {{ listing.posted_date|date:"M d, Y" }} </small></p>
+                </li>
+                <li> <p class="card-text"><small class="text-muted">LISTED BY: {{ listing.listing_seller }} </small></p>
+                </li>
+                <li> <p class="card-text"><small class="text-muted">CATEGORY: {{ listing.category }} </small></p>
+                </li>
+                <li> <p class="card-text"><small class="text-muted">STATUS: {{ listing.status }} </small></p>
+                </li>
+                {% if listing.listing_seller != user %}
+
+                {% endif  %}
+              </ul>
+
+
+            {% if listing.status == "Active" %}
+
+        <form action="{% url 'add_comment' %}" method="post">
+             {% csrf_token %}
+             {{c_form}}
+             <br>
+           <input class="btn btn-primary" type="submit" value="Submit Comment">
+           <input type="hidden" name="item_id" value="{{listing.id}}">
+            <br>
+            <br>
+         </form>
+
+            {% endif %}
+            <br>
+            <br>
+            {% for comment in comments %}
+                <div class="card border-scondary ">
+                <div class="card-header">{{ comment.user|default:"Unknown user" }} commented on {{ comment.posted_date|date:"M d, Y"  }}</div>
+                    <div class="card-body">
+                        <h5 class="card-title"> {{ comment.comment }}</h5>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+
+
+</div>
+    </div>
+        </div>
+
+
+
+
+{% endblock %}
+
+

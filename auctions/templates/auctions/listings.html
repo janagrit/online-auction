@@ -1,0 +1,84 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+{% block body %}
+
+
+<br>
+
+
+
+     <h6 class="font-weight-bold">User: {{request.user.username}}</h6>
+    <h6 class="font-weight-bold my-3">Email: {{request.user.email}}</h6>
+<p></p>
+
+        <h2>My Listings[ {{request.user.username}}]:</h2>
+
+
+
+    <hr>
+        <div class="card card-body">
+            <hr>
+
+            <table class="table table-sm">
+                <tr>
+                  <th >Listings </th>
+                  <th >Date Ordered</th>
+                  <th >Status</th>
+                  <th >Listed By:</th>
+                  <th >Update</th>
+                  <th >Remove</th>
+                  <th >Close</th>
+
+                </tr>
+
+
+
+                {% for i in listings %}
+
+                    {% if i.listing_seller == user %}
+
+                     <tr>
+                        <td><a href="{% url 'listing' i.id %}">{{i.title}}</a></td>
+                        <td>{{i.posted_date}}</td>
+                        <td>{{i.status}}</td>
+                         <td>{{i.listing_seller}}</td>
+
+
+                         <td><a class="btn btn-primary btn-sm btn-info" href="{% url 'update_listing' i.id %}">Update</a></td>
+                        <td><a class="btn btn-primary btn-sm btn-danger" href="{% url 'delete_listing' i.id %}">Delete</a></td>
+                        <td><a class="btn btn-primary btn-sm btn-warning" href="{% url 'close_listing' i.id %}">Close</a></td>
+                     </tr>
+                 {% endif %}
+                {% endfor %}
+
+            </table>
+
+
+<h2>SOLD ITEMS BY OTHER USERS</h2>
+
+
+             {% for i in listings %}
+                    {% if i.listing_seller != user and i.status == 'Sold' %}
+
+                     <tr>
+                        <td><a href="{% url 'listing' i.id %}">{{i.title}} , {{i.listing_seller}} </a></td>
+
+
+
+
+
+
+                               </tr>
+                 {% endif %}
+                {% endfor %}
+
+
+
+
+            <hr>
+
+
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+{% block body %}
+
+
+    {{user }}
+    {{listing.listing_seller}}
+
+
+
+
+<h3> Are you sure to delete  {{listing}} </h3>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card card-body">
+            <form action=""  method="POST">
+                {% csrf_token %}
+                <a class="btn btn-primary btn-sm btn-warning"  href="{% url 'listings' %}">Cancel</a>
+                <input class="btn btn-primary btn-sm btn-danger"   type="submit" value="Confirm"/>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+{% endblock body %}

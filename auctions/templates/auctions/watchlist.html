@@ -1,0 +1,24 @@
+<!--Watchlist: Users who are signed in should be able to visit a Watchlist page, -->
+<!--which should display all of the listings that a user has added to their watchlist.-->
+<!--Clicking on any of those listings should take the user to that listing’s page.-->
+{% extends "auctions/layout.html" %}
+{% load static %}
+{% block body %}
+
+
+
+
+
+            {% if watchlist.count == 0 %}
+                You don't have items in your Watchlist
+            {% else %}
+        <ul>
+            {% for w in watchlist %}
+
+                <li><a href="{% url 'listing' w.item.id %}">{{ w.item.title }}, {{ w.item.status }}</a></li>
+
+            {% endfor %}
+        </ul>
+            {% endif %}
+
+{% endblock %}

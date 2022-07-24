@@ -1,0 +1,57 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+
+{% include 'auctions/statistic.html' %}
+
+<h2>{{message}}</h2>
+
+
+<br>
+
+	<div class="row">
+
+
+
+
+		{% for listing in active_listings %}
+		<div class="col-lg-4">
+
+			<img class="thumbnail" src="{{listing.imageURL}}" height="100" width="250" />
+			<div class="box-element listing">
+				<h6><strong>{{listing.title}}</strong></h6>
+			<h6><strong>[ {{listing.listing_seller}} ]</strong></h6>
+
+				<form method="get" action="{% url 'watchlist' %}">
+
+
+
+				</form>
+				<hr>
+				<h6><strong>{{listing.status}}</strong></h6>
+				<h4 style="display: inline-block; float: right"><strong>${{listing.starting_bid}}</strong></h4>
+
+
+				<h6><strong>DATE: {{listing.posted_date}}</strong></h6>
+
+				<a class="btn btn-outline-success" href="{% url 'listing' listing.id %}">View</a>
+
+
+
+
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+
+
+
+
+
+
+
+
+
+{% endblock %}

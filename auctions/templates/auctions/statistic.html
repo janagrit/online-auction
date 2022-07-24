@@ -1,0 +1,74 @@
+
+{% block body %}
+
+<hr>
+
+
+<div class="row">
+  <div class="col">
+      <div class="col-md">
+      <div class="card text-center text-white md-3" id="active">
+          <div class="card-header">
+              <h5 class="card-title">Active</h5>
+          </div>
+          <div class="card-header">
+              <h5 class="card-title">{{active}}</h5>
+          </div>
+
+<!--          <div class="card-body">-->
+<!--              <h5 class="card-title"></h5>-->
+<!--          </div>-->
+      </div>
+      </div>
+  </div>
+
+  <div class="col">
+      <div class="col-md">
+      <div class="card text-center text-white md-3" id="sold">
+          <div class="card-header">
+              <h5 class="card-title">Sold</h5>
+          </div>
+          <div class="card-header">
+              <h5 class="card-title">{{sold}}</h5>
+          </div>
+
+      </div>
+      </div>
+  </div>
+
+
+
+
+       <div class="col">
+      <div class="col-md">
+      <div class="card text-center text-white md-3" id="total">
+          <div class="card-header">
+              <h5 class="card-title">Total Listings</h5>
+          </div>
+          <div class="card-header">
+              <h5 class="card-title">{{total}}</h5>
+          </div>
+
+      </div>
+      </div>
+  </div>
+
+
+<div class="col">
+      <div class="col-md">
+      <div class="card text-center text-white md-3" id="total_customers">
+          <div class="card-header">
+              <h5 class="card-title">Users</h5>
+          </div>
+          <div class="card-header">
+              <h5 class="card-title">{{total_customers}}</h5>
+          </div>
+
+      </div>
+      </div>
+  </div>
+</div>
+
+
+
+{% endblock %}

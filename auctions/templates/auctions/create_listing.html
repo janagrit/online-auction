@@ -1,0 +1,26 @@
+<!--Create Listing: Users should be able to visit a page to create a new listing. They should-->
+<!--be able to specify a title for the listing, a text-based description,-->
+<!--and what the starting bid should be. Users should also optionally be able-->
+<!--to provide a URL for an image for the listing and/or a category-->
+<!--(e.g. Fashion, Toys, Electronics, Home, etc.).-->
+
+{% extends "auctions/layout.html" %}
+{% load static %}
+{% block body %}
+
+
+        <h3>NEW LISTING FORM</h3>
+
+
+
+  <form action="" method="post">
+      {% csrf_token %}
+      {{form}}
+    <input class="btn btn-primary" type="submit" value="Save">
+      {{message}}
+  </form>
+{{message}}
+<hr>
+
+
+{% endblock %}
